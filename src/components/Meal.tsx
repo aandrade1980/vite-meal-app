@@ -34,8 +34,16 @@ export function Meal() {
     );
   }
 
+  const ingredients = Object.fromEntries(
+    Object.entries(meal || {}).filter(
+      ([key, v]) => key.startsWith('strIngredient') && v
+    )
+  );
+
+  console.log('ingredients', ingredients);
+
   return (
-    <Grid.Container gap={2}>
+    <Grid.Container gap={2} justify="center">
       <Grid xs={12}>
         <Button
           light
@@ -52,13 +60,21 @@ export function Meal() {
           <Card.Header>
             <Text h3>{meal?.strMeal}</Text>
           </Card.Header>
-          <Image
-            width={450}
-            height={450}
-            src={meal?.strMealThumb as string}
-            alt={meal?.strMeal as string}
-            objectFit="cover"
-          />
+          <Card.Body>
+            <Image
+              width={450}
+              height={450}
+              src={meal?.strMealThumb as string}
+              alt={meal?.strMeal as string}
+              objectFit="cover"
+            />
+            <h5>Ingredients:</h5>
+            <ul>
+              {Object.entries(ingredients).map(([key, value]) => (
+                <li key={key}>{value}</li>
+              ))}
+            </ul>
+          </Card.Body>
         </Card>
       </Grid>
     </Grid.Container>

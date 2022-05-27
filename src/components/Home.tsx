@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import useLocalStorage from 'use-local-storage';
 import {
   Button,
   Card,
@@ -16,10 +17,17 @@ import { Link } from 'react-router-dom';
 import useMeals from '../hooks/useMeals';
 
 export function Home() {
-  const [inputValue, setInputValue] = useState('');
-  const [searchValue, setSearchValue] = useState('');
+  const [searchParam, setSearchParam] = useLocalStorage('searchParam', '');
+
+  const [inputValue, setInputValue] = useState(searchParam);
+  const [searchValue, setSearchValue] = useState(searchParam);
 
   const { data: meals, isFetching } = useMeals(searchValue);
+
+  const handleSearch = () => {
+    setSearchValue(inputValue);
+    setSearchParam(inputValue);
+  };
 
   return (
     <Container xl as="main">
@@ -29,7 +37,7 @@ export function Home() {
             <Row justify="center" align="center" css={{ mb: 16 }}>
               <Text h1>Meal App</Text>
             </Row>
-            <Row justify="center" align="center">
+            <Row justify="center" align="center" css={{ mb: 16 }}>
               <form>
                 <Container display="flex">
                   <Input
@@ -40,9 +48,7 @@ export function Home() {
                     onChange={e => setInputValue(e.target.value)}
                   />
                   <Spacer x={1} />
-                  <Button onPress={() => setSearchValue(inputValue)}>
-                    Search
-                  </Button>
+                  <Button onPress={handleSearch}>Search</Button>
                 </Container>
               </form>
             </Row>
