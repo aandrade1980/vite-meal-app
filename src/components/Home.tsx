@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import useLocalStorage from 'use-local-storage';
 import {
   Button,
@@ -24,13 +24,15 @@ export function Home() {
 
   const { data: meals, isFetching } = useMeals(searchValue);
 
-  const handleSearch = () => {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     setSearchValue(inputValue);
     setSearchParam(inputValue);
   };
 
   return (
-    <Container xl as="main">
+    <Container xl as="main" display="flex" justify="center">
       <Grid.Container gap={2}>
         <Grid xs={12}>
           <Card>
@@ -38,7 +40,7 @@ export function Home() {
               <Text h1>Meal App</Text>
             </Row>
             <Row justify="center" align="center" css={{ mb: 16 }}>
-              <form>
+              <form onSubmit={handleSearch}>
                 <Container display="flex">
                   <Input
                     aria-label="Search"
@@ -48,7 +50,7 @@ export function Home() {
                     onChange={e => setInputValue(e.target.value)}
                   />
                   <Spacer x={1} />
-                  <Button onPress={handleSearch}>Search</Button>
+                  <Button type="submit">Search</Button>
                 </Container>
               </form>
             </Row>

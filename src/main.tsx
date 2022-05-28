@@ -6,17 +6,19 @@ import App from './App';
 import { NextUIProvider } from '@nextui-org/react';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <NextUIProvider>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <NextUIProvider>
           <App />
-        </QueryClientProvider>
-      </BrowserRouter>
-    </NextUIProvider>
+        </NextUIProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

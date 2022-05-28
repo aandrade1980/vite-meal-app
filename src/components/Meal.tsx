@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
   Button,
   Card,
@@ -9,9 +10,9 @@ import {
 } from '@nextui-org/react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { IoMdArrowBack } from 'react-icons/io';
-
 import useMeal from '../hooks/useMeal';
+
+import { IoMdArrowBack } from 'react-icons/io';
 
 export function Meal() {
   const params = useParams();
@@ -20,6 +21,33 @@ export function Meal() {
   const { data: meal, isFetching } = useMeal(params.id);
 
   const handleOnBack = () => navigate('/');
+
+  const renderIngredients = useMemo(() => {
+    let ingredientsList: string[] = [];
+
+    Object.entries(meal || {}).forEach(([key, value]) => {
+      if (key.startsWith('strIngredient') && value) {
+        ingredientsList.push(value);
+      }
+    });
+
+    return ingredientsList.map(ingredient => (
+      <Text key={ingredient}>{ingredient}</Text>
+    ));
+  }, [meal]);
+
+  const renderTags = useMemo(
+    () => (
+      <>
+        {meal?.strTags?.split(',').map(tag => (
+          <Text as="span" css={{ mr: 8 }}>
+            {tag}
+          </Text>
+        ))}
+      </>
+    ),
+    [meal]
+  );
 
   if (isFetching) {
     return (
@@ -33,14 +61,6 @@ export function Meal() {
       </Container>
     );
   }
-
-  const ingredients = Object.fromEntries(
-    Object.entries(meal || {}).filter(
-      ([key, v]) => key.startsWith('strIngredient') && v
-    )
-  );
-
-  console.log('ingredients', ingredients);
 
   return (
     <Grid.Container gap={2} justify="center">
@@ -58,7 +78,12 @@ export function Meal() {
       <Grid xs={12} md={8}>
         <Card>
           <Card.Header>
-            <Text h3>{meal?.strMeal}</Text>
+            <>
+              <Text h3 css={{ mr: 16 }}>
+                {meal?.strMeal}
+              </Text>
+              {renderTags}
+            </>
           </Card.Header>
           <Card.Body>
             <Image
@@ -68,12 +93,17 @@ export function Meal() {
               alt={meal?.strMeal as string}
               objectFit="cover"
             />
-            <h5>Ingredients:</h5>
-            <ul>
-              {Object.entries(ingredients).map(([key, value]) => (
-                <li key={key}>{value}</li>
-              ))}
-            </ul>
+            <Grid.Container css={{ mt: 8 }} gap={2}>
+              <Grid xs={2} direction="column">
+                <h5>Ingredients:</h5>
+                {renderIngredients}
+              </Grid>
+              <Grid xs={10} direction="column">
+                <h5>Instructions:</h5>
+                <Text>{meal?.strInstructions}</Text>
+              </Grid>
+            </Grid.Container>
+            {/* </div> */}
           </Card.Body>
         </Card>
       </Grid>
