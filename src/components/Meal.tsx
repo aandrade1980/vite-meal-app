@@ -31,8 +31,8 @@ export function Meal() {
       }
     });
 
-    return ingredientsList.map(ingredient => (
-      <Text key={ingredient}>{ingredient}</Text>
+    return ingredientsList.map((ingredient, index) => (
+      <Text key={`${ingredient}-${index}`}>{ingredient}</Text>
     ));
   }, [meal]);
 
