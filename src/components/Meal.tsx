@@ -41,7 +41,7 @@ export function Meal() {
       <>
         {meal?.strTags?.split(',').map(tag => (
           <Text as="span" css={{ mr: 8 }}>
-            {tag}
+            #{tag}
           </Text>
         ))}
       </>

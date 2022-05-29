@@ -1,14 +1,25 @@
 import { Route, Routes } from 'react-router-dom';
-import { Header, Home, Meal } from './components';
+
+/** Components */
+import { Header, Home, Meal, Login } from './components';
+
+/** Context */
+import { useAuth } from './context/AuthContext';
 
 function App() {
+  const { user } = useAuth();
+
   return (
     <div className="App">
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/:id" element={<Meal />} />
-      </Routes>
+      {user ? (
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/:id" element={<Meal />} />
+        </Routes>
+      ) : (
+        <Login />
+      )}
     </div>
   );
 }
