@@ -5,6 +5,7 @@ import {
   Container,
   Grid,
   Image,
+  Link,
   Loading,
   Text
 } from '@nextui-org/react';
@@ -13,6 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useMeal from '../hooks/useMeal';
 
 import { IoMdArrowBack } from 'react-icons/io';
+import { AiFillYoutube } from 'react-icons/ai';
 
 export function Meal() {
   const params = useParams();
@@ -98,12 +100,23 @@ export function Meal() {
                 <h5>Ingredients:</h5>
                 {renderIngredients}
               </Grid>
-              <Grid xs={10} direction="column">
+              <Grid xs={9} direction="column">
                 <h5>Instructions:</h5>
                 <Text>{meal?.strInstructions}</Text>
               </Grid>
+              <Grid xs={1}>
+                <Text css={{ mt: 32 }}>
+                  <Link
+                    color="error"
+                    href={meal?.strYoutube}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <AiFillYoutube size={32} />
+                  </Link>
+                </Text>
+              </Grid>
             </Grid.Container>
-            {/* </div> */}
           </Card.Body>
         </Card>
       </Grid>
