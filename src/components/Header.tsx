@@ -1,12 +1,10 @@
 /** Component */
 import { Avatar, Container, theme } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 /** Context */
 import { useAuth } from '../context/AuthContext';
-
-/** Icons */
-import { MealIcon } from './MealIcon';
 
 export function Header() {
   const { zIndices } = theme;
@@ -27,13 +25,19 @@ export function Header() {
       <Container
         xl
         as="nav"
-        css={{ height: 72, backdropFilter: 'blur(10px)' }}
+        css={{ height: 80, backdropFilter: 'blur(10px)' }}
         display="flex"
         alignItems="center"
         justify="space-between"
       >
         <Link to="/">
-          <MealIcon height={48} width={48} />
+          <Player
+            // TODO: Move to env file or config file
+            src="https://assets1.lottiefiles.com/packages/lf20_kplouxqz.json"
+            loop
+            autoplay
+            style={{ height: 80, width: 80 }}
+          />
         </Link>
         {user && (
           <Avatar

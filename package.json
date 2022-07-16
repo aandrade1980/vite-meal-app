@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.4.7",
     "@nextui-org/react": "^1.0.0-beta.7",
     "axios": "^0.27.2",
     "firebase": "^9.8.2",
