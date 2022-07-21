@@ -13,6 +13,7 @@ import {
 } from '@nextui-org/react';
 
 import { Link } from 'react-router-dom';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 import useMeals from '../hooks/useMeals';
 
@@ -36,8 +37,17 @@ export function Home() {
       <Grid.Container gap={2}>
         <Grid xs={12}>
           <Card>
-            <Row justify="center" align="center" css={{ mb: 16 }}>
+            <Row justify="center" align="center">
               <Text h1>Meal App</Text>
+            </Row>
+            <Row justify="center" css={{ mb: 24 }}>
+              <Player
+                // TODO: Move to env file or config file
+                src="https://assets1.lottiefiles.com/packages/lf20_kplouxqz.json"
+                loop
+                autoplay
+                style={{ height: 80, width: 80 }}
+              />
             </Row>
             <Row justify="center" align="center" css={{ mb: 16 }}>
               <form onSubmit={handleSearch}>
