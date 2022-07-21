@@ -3,6 +3,9 @@ import { Avatar, Container, theme } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 import { Player } from '@lottiefiles/react-lottie-player';
 
+/** Icons */
+import { MealIcon } from './MealIcon';
+
 /** Context */
 import { useAuth } from '../context/AuthContext';
 
@@ -31,17 +34,11 @@ export function Header() {
         justify="space-between"
       >
         <Link to="/">
-          <Player
-            // TODO: Move to env file or config file
-            src="https://assets1.lottiefiles.com/packages/lf20_kplouxqz.json"
-            loop
-            autoplay
-            style={{ height: 80, width: 80 }}
-          />
+          <MealIcon height={48} width={48} />
         </Link>
         {user && (
           <Avatar
-            src={user.photoURL || 'https://via.placeholder.com/120'}
+            src={user?.photoURL || 'https://via.placeholder.com/120'}
             size="lg"
           />
         )}
