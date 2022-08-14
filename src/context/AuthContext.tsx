@@ -12,6 +12,9 @@ import {
   signInWithPopup,
   User
 } from 'firebase/auth';
+
+import { useNavigate } from 'react-router-dom';
+
 import { auth } from '../service/firebase';
 
 type authContextType = {
@@ -37,6 +40,7 @@ type AuthProviderProps = {
 };
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
 
   const provider = new GoogleAuthProvider();
@@ -67,12 +71,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
-      if (user) {
-        const uid = user.uid;
-        console.log({ uid });
-      } else {
-        console.log('no user');
+      setUser(user);
+
+      if (!user) {
+        return navigate('/login');
       }
+
+      navigate('/');
     });
   }, []);
 
