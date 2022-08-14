@@ -75,7 +75,7 @@ export function Home() {
           meals?.map(meal => (
             <Grid key={meal.idMeal}>
               <Link to={`/${meal.idMeal}`}>
-                <Card hoverable clickable>
+                <Card isHoverable isPressable>
                   <Card.Body css={{ p: 0 }}>
                     <Card.Image
                       objectFit="cover"
