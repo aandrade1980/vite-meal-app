@@ -1,25 +1,30 @@
+import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 /** Components */
-import { Header, Home, Meal, Login } from './components';
+import { Header, Home, Login } from './components';
 
-/** Context */
-import { useAuth } from './context/AuthContext';
+/** Dynamic */
+const MealComponent = lazy(() =>
+  import('./components').then(module => ({ default: module.Meal }))
+);
 
 function App() {
-  const { user } = useAuth();
-
   return (
     <div className="App">
       <Header />
-      {user ? (
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/:id" element={<Meal />} />
-        </Routes>
-      ) : (
-        <Login />
-      )}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/:id"
+          element={
+            <Suspense>
+              <MealComponent />
+            </Suspense>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </div>
   );
 }
