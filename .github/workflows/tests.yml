@@ -1,0 +1,27 @@
+name: Tests CI
+on: [push, workflow_dispatch] # On push and manual
+jobs:
+  static-eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - run: npm run lint
+  # TODO: Need to set up Jest first...
+  # unit-integration-jest:
+  #   runs-on: ubuntu-latest
+  #   steps:
+
+  ui-cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress Run
+        uses: cypress-io/github-actions@v4
+        with:
+          browser: chrome
+          headless: true
+          build: npm run build
+          start: npm run preview
+          wait-on: 'http://localhost:4173'
