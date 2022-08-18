@@ -23,6 +23,6 @@ jobs:
           browser: chrome
           build: npm run build
           start: npm run preview
+          env:
+            CYPRESS_host: http://localhost:4173
           wait-on: 'http://localhost:4173'
-          with:
-            env: host=localhost,port=4173
