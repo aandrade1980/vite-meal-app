@@ -24,4 +24,5 @@ jobs:
           build: npm run build
           start: npm run preview
           wait-on: 'http://localhost:4173'
-          with: host=localhost,port=4173
+          with:
+            env: host=localhost,port=4173
