@@ -1,5 +1,11 @@
-describe('empty spec', () => {
-  it('passes', () => {
-    cy.visit('https://example.cypress.io');
+const baseUrl = Cypress.env('host') || 'http://127.0.0.1:5173';
+
+describe('home page', () => {
+  it('should go to the home page', () => {
+    cy.visit(baseUrl);
+
+    cy.url().should('include', '/login');
+
+    cy.contains('Welcome to Meal App');
   });
 });
