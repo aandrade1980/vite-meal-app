@@ -1,7 +1,11 @@
 const baseUrl = Cypress.env('host') || 'http://127.0.0.1:5173';
 
-describe('search for a meal', () => {
-  it('should go to the home page and make a search', () => {
+describe('home page', () => {
+  it('should go to the home page', () => {
     cy.visit(baseUrl);
+
+    cy.url().should('include', '/login');
+
+    cy.contains('Welcome to Meal App');
   });
 });
