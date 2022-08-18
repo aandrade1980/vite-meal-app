@@ -1,4 +1,9 @@
-export function MealIcon({ height = 24, width = 24, ...props }) {
+type IconProps = {
+  height?: number;
+  width?: number;
+};
+
+export function MealIcon({ height = 24, width = 24, ...props }: IconProps) {
   return (
     <svg
       height={height}
