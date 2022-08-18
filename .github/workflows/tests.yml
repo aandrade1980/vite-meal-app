@@ -21,7 +21,7 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           browser: chrome
-          headless: true
           build: npm run build
           start: npm run preview
           wait-on: 'http://localhost:4173'
+          with: host=localhost,port=4173
