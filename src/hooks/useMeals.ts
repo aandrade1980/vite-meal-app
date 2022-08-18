@@ -14,7 +14,8 @@ export default function useMeals(searchValue: string) {
     ['meals', searchValue],
     () => getMeals(searchValue),
     {
-      enabled: searchValue.length > 2
+      enabled: searchValue.length > 2,
+      refetchOnWindowFocus: false
     }
   );
 }

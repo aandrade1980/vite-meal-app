@@ -41,8 +41,8 @@ export function Meal() {
   const renderTags = useMemo(
     () => (
       <>
-        {meal?.strTags?.split(',').map(tag => (
-          <Text as="span" css={{ mr: 8 }}>
+        {meal?.strTags?.split(',').map((tag, index) => (
+          <Text as="span" key={`${tag}-${index}`} css={{ mr: 8 }}>
             #{tag}
           </Text>
         ))}
