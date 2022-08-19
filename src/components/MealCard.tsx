@@ -10,7 +10,7 @@ import { Meal } from '../types/meal';
 type MealCard = Pick<Meal, 'idMeal' | 'strMealThumb' | 'strMeal'>;
 
 export const MealCard: FC<MealCard> = ({ idMeal, strMealThumb, strMeal }) => (
-  <Grid key={idMeal}>
+  <Grid key={idMeal} xs={6} sm={4} md={3}>
     <Link to={`/${idMeal}`} key={idMeal}>
       <Card isHoverable isPressable>
         <Card.Body css={{ p: 0 }}>

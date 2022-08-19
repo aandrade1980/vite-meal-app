@@ -42,7 +42,7 @@ export function Home() {
   return (
     <Container xl as="main" display="flex" justify="center">
       <Grid.Container gap={2}>
-        <Grid xs={12}>
+        <Grid xs={12} css={{ mb: 16 }}>
           <Card>
             <Row justify="center" align="center">
               <Text h1>Meal App</Text>
@@ -79,7 +79,14 @@ export function Home() {
             <Loading size="xl" />
           </Container>
         ) : (
-          <Grid.Container gap={3}>
+          <Grid.Container
+            gap={3}
+            css={{
+              pt: 0,
+              height: 'calc(100vh - 350px)',
+              overflowX: 'auto'
+            }}
+          >
             {meals?.map(meal => (
               <MealCardComponent
                 key={meal.idMeal}
