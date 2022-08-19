@@ -1,6 +1,6 @@
 import {
   createContext,
-  ReactNode,
+  PropsWithChildren,
   useContext,
   useEffect,
   useState
@@ -35,11 +35,7 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-type AuthProviderProps = {
-  children: ReactNode;
-};
-
-export function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({ children }: PropsWithChildren) {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
 
@@ -73,11 +69,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     onAuthStateChanged(auth, user => {
       setUser(user);
 
-      if (!user) {
-        return navigate('/login');
-      }
-
-      navigate('/');
+      user ? navigate('/') : navigate('/login');
     });
   }, []);
 

@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+/** Hooks */
+import { lazy, useState } from 'react';
 import useLocalStorage from 'use-local-storage';
+import useMeals from '../hooks/useMeals';
+
+/** Components */
 import {
   Button,
   Card,
@@ -12,10 +16,13 @@ import {
   Text
 } from '@nextui-org/react';
 
-import { Link } from 'react-router-dom';
+/** Lottie */
 import { Player } from '@lottiefiles/react-lottie-player';
 
-import useMeals from '../hooks/useMeals';
+/** Dynamic */
+const MealCardComponent = lazy(() =>
+  import('./MealCard').then(module => ({ default: module.MealCard }))
+);
 
 export function Home() {
   const [searchParam, setSearchParam] = useLocalStorage('searchParam', '');
@@ -35,7 +42,7 @@ export function Home() {
   return (
     <Container xl as="main" display="flex" justify="center">
       <Grid.Container gap={2}>
-        <Grid xs={12}>
+        <Grid xs={12} css={{ mb: 16 }}>
           <Card>
             <Row justify="center" align="center">
               <Text h1>Meal App</Text>
@@ -72,30 +79,23 @@ export function Home() {
             <Loading size="xl" />
           </Container>
         ) : (
-          meals?.map(meal => (
-            <Grid key={meal.idMeal}>
-              <Link to={`/${meal.idMeal}`}>
-                <Card isHoverable isPressable>
-                  <Card.Body css={{ p: 0 }}>
-                    <Card.Image
-                      objectFit="cover"
-                      src={meal.strMealThumb}
-                      height={320}
-                      width="100%"
-                      alt={meal.strMeal}
-                    />
-                  </Card.Body>
-                  <Card.Footer>
-                    <Text b>
-                      {meal.strMeal.length > 35
-                        ? meal.strMeal.substring(0, 32) + '...'
-                        : meal.strMeal}
-                    </Text>
-                  </Card.Footer>
-                </Card>
-              </Link>
-            </Grid>
-          ))
+          <Grid.Container
+            gap={3}
+            css={{
+              pt: 0,
+              height: 'calc(100vh - 350px)',
+              overflowX: 'auto'
+            }}
+          >
+            {meals?.map(meal => (
+              <MealCardComponent
+                key={meal.idMeal}
+                idMeal={meal.idMeal}
+                strMealThumb={meal.strMealThumb}
+                strMeal={meal.strMeal}
+              />
+            ))}
+          </Grid.Container>
         )}
       </Grid.Container>
     </Container>
