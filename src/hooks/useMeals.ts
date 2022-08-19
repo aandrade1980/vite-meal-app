@@ -1,11 +1,16 @@
+/** Hooks */
 import { useQuery } from 'react-query';
-import axios from 'axios';
+
+/** Types */
 import { Meal } from '../types/meal';
 
 const getMeals = async (searchValue: string) => {
-  const { data } = await axios.get(
+  const response = await fetch(
     `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`
   );
+
+  const data = await response.json();
+
   return data?.meals;
 };
 
