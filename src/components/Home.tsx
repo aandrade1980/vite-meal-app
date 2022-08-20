@@ -1,5 +1,6 @@
 /** Hooks */
 import { lazy, useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 import useLocalStorage from 'use-local-storage';
 import useMeals from '../hooks/useMeals';
 
@@ -25,6 +26,7 @@ const MealCardComponent = lazy(() =>
 );
 
 export function Home() {
+  const { user } = useAuth();
   const [searchParam, setSearchParam] = useLocalStorage('searchParam', '');
 
   const [inputValue, setInputValue] = useState(searchParam);
@@ -40,64 +42,68 @@ export function Home() {
   };
 
   return (
-    <Container xl as="main" display="flex" justify="center">
-      <Grid.Container gap={2}>
-        <Grid xs={12} css={{ mb: 16 }}>
-          <Card>
-            <Row justify="center" align="center">
-              <Text h1>Meal App</Text>
-            </Row>
-            <Row justify="center" css={{ mb: 24 }}>
-              <Player
-                // TODO: Move to env file or config file
-                src="https://assets1.lottiefiles.com/packages/lf20_kplouxqz.json"
-                loop
-                autoplay
-                style={{ height: 80, width: 80 }}
-              />
-            </Row>
-            <Row justify="center" align="center" css={{ mb: 16 }}>
-              <form onSubmit={handleSearch}>
-                <Container display="flex">
-                  <Input
-                    aria-label="Search"
-                    type="search"
-                    placeholder="Search for meals"
-                    value={inputValue}
-                    onChange={e => setInputValue(e.target.value)}
+    <>
+      {user && (
+        <Container xl as="main" display="flex" justify="center">
+          <Grid.Container gap={2}>
+            <Grid xs={12} css={{ mb: 16 }}>
+              <Card>
+                <Row justify="center" align="center">
+                  <Text h1>Meal App</Text>
+                </Row>
+                <Row justify="center" css={{ mb: 24 }}>
+                  <Player
+                    // TODO: Move to env file or config file
+                    src="https://assets1.lottiefiles.com/packages/lf20_kplouxqz.json"
+                    loop
+                    autoplay
+                    style={{ height: 80, width: 80 }}
                   />
-                  <Spacer x={1} />
-                  <Button type="submit">Search</Button>
-                </Container>
-              </form>
-            </Row>
-          </Card>
-        </Grid>
+                </Row>
+                <Row justify="center" align="center" css={{ mb: 16 }}>
+                  <form onSubmit={handleSearch}>
+                    <Container display="flex">
+                      <Input
+                        aria-label="Search"
+                        type="search"
+                        placeholder="Search for meals"
+                        value={inputValue}
+                        onChange={e => setInputValue(e.target.value)}
+                      />
+                      <Spacer x={1} />
+                      <Button type="submit">Search</Button>
+                    </Container>
+                  </form>
+                </Row>
+              </Card>
+            </Grid>
 
-        {isFetching ? (
-          <Container display="flex" justify="center" css={{ mt: 80 }}>
-            <Loading size="xl" />
-          </Container>
-        ) : (
-          <Grid.Container
-            gap={3}
-            css={{
-              pt: 0,
-              height: 'calc(100vh - 350px)',
-              overflowX: 'auto'
-            }}
-          >
-            {meals?.map(meal => (
-              <MealCardComponent
-                key={meal.idMeal}
-                idMeal={meal.idMeal}
-                strMealThumb={meal.strMealThumb}
-                strMeal={meal.strMeal}
-              />
-            ))}
+            {isFetching ? (
+              <Container display="flex" justify="center" css={{ mt: 80 }}>
+                <Loading size="xl" />
+              </Container>
+            ) : (
+              <Grid.Container
+                gap={3}
+                css={{
+                  pt: 0,
+                  height: 'calc(100vh - 350px)',
+                  overflowX: 'auto'
+                }}
+              >
+                {meals?.map(meal => (
+                  <MealCardComponent
+                    key={meal.idMeal}
+                    idMeal={meal.idMeal}
+                    strMealThumb={meal.strMealThumb}
+                    strMeal={meal.strMeal}
+                  />
+                ))}
+              </Grid.Container>
+            )}
           </Grid.Container>
-        )}
-      </Grid.Container>
-    </Container>
+        </Container>
+      )}
+    </>
   );
 }

@@ -13,7 +13,7 @@ import {
   User
 } from 'firebase/auth';
 
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { auth } from '../service/firebase';
 
@@ -37,6 +37,8 @@ export function useAuth() {
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [user, setUser] = useState<User | null>(null);
 
   const provider = new GoogleAuthProvider();
@@ -66,10 +68,16 @@ export function AuthProvider({ children }: PropsWithChildren) {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, user => {
-      setUser(user);
+    onAuthStateChanged(auth, firebaseUser => {
+      setUser(firebaseUser);
 
-      user ? navigate('/') : navigate('/login');
+      const { pathname } = location;
+
+      if (firebaseUser) {
+        return navigate(pathname === '/login' ? '/' : pathname);
+      }
+
+      navigate('/login');
     });
   }, []);
 

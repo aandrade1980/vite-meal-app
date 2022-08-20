@@ -10,7 +10,7 @@ import { useAuth } from '../context/AuthContext';
 
 export function Header() {
   const { zIndices } = theme;
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <Container
@@ -39,6 +39,7 @@ export function Header() {
           <Avatar
             src={user?.photoURL || 'https://via.placeholder.com/120'}
             size="lg"
+            onClick={logout}
           />
         )}
       </Container>
