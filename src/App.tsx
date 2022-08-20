@@ -3,11 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 
 /** Components */
 import { Header, Home, Login } from './components';
+import { ToastContainer } from 'react-toastify';
 
 /** Dynamic */
 const MealComponent = lazy(() =>
   import('./components').then(module => ({ default: module.Meal }))
 );
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
       </Routes>
+      <Suspense fallback={null}>
+        <ToastContainer />
+      </Suspense>
     </div>
   );
 }
