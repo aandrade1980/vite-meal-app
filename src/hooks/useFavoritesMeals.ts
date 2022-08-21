@@ -22,5 +22,5 @@ export const useIsFavoriteMeal = (mealId: string) => {
     }
   );
 
-  return { isFavorite: data, error, isLoading, refetch };
+  return { isFavorite: data, error, isLoadingFavorite: isLoading, refetch };
 };
