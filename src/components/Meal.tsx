@@ -35,7 +35,9 @@ export function Meal() {
 
   const { data: meal, isFetching } = useMeal(params.id);
 
-  const { isFavorite, refetch } = useIsFavoriteMeal(params.id as string);
+  const { isFavorite, isLoadingFavorite, refetch } = useIsFavoriteMeal(
+    params.id as string
+  );
 
   const handleOnBack = () => navigate('/');
 
@@ -135,19 +137,30 @@ export function Meal() {
                 </Text>
                 {renderTags}
               </Col>
-              <Col css={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Button
-                  auto
-                  color="error"
-                  icon={
-                    isFavorite ? (
-                      <BsHeartFill fill="currentColor" />
-                    ) : (
-                      <BsHeart fill="currentColor" />
-                    )
-                  }
-                  onPress={handleFavorite}
-                />
+              <Col
+                css={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  flexBasis: '15%'
+                }}
+              >
+                {!isLoadingFavorite && (
+                  <Button
+                    auto
+                    shadow
+                    color="error"
+                    icon={
+                      isFavorite ? (
+                        <BsHeartFill fill="currentColor" />
+                      ) : (
+                        <BsHeart fill="currentColor" />
+                      )
+                    }
+                    onPress={handleFavorite}
+                  >
+                    {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                  </Button>
+                )}
               </Col>
             </Row>
           </Card.Header>
