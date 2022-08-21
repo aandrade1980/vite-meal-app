@@ -114,6 +114,8 @@ export function Meal() {
     );
   }
 
+  const hasYoutubeLink = meal?.strYoutube;
+
   return (
     <Grid.Container gap={2} justify="center">
       <Grid xs={12}>
@@ -177,22 +179,24 @@ export function Meal() {
                 <h5>Ingredients:</h5>
                 {renderIngredients}
               </Grid>
-              <Grid xs={9} direction="column">
+              <Grid xs={hasYoutubeLink ? 9 : 10} direction="column">
                 <h5>Instructions:</h5>
                 <Text>{meal?.strInstructions}</Text>
               </Grid>
-              <Grid xs={1}>
-                <Text css={{ mt: 32 }}>
-                  <Link
-                    color="error"
-                    href={meal?.strYoutube}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <AiFillYoutube size={32} />
-                  </Link>
-                </Text>
-              </Grid>
+              {hasYoutubeLink && (
+                <Grid xs={1}>
+                  <Text css={{ mt: 32 }}>
+                    <Link
+                      color="error"
+                      href={hasYoutubeLink}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <AiFillYoutube size={32} />
+                    </Link>
+                  </Text>
+                </Grid>
+              )}
             </Grid.Container>
           </Card.Body>
         </Card>
