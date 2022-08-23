@@ -29,7 +29,7 @@ export function Header() {
         position: 'sticky',
         top: 0,
         background: 'transparent',
-        zIndex: zIndices.max,
+        zIndex: zIndices[10],
         boxShadow: 'rgb(2 1 1 / 10%) 0px 5px 20px -5px'
       }}
     >
