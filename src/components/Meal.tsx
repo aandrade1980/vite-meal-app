@@ -34,7 +34,9 @@ export function Meal() {
 
   const { data: meal, isFetching } = useMeal(params.id);
 
-  const { isFavorite, refetch } = useIsFavoriteMeal(params.id as string);
+  const { isFavorite, isLoadingFavorite, refetch } = useIsFavoriteMeal(
+    params.id as string
+  );
 
   const handleOnBack = () => navigate('/');
 
@@ -111,6 +113,8 @@ export function Meal() {
     );
   }
 
+  const hasYoutubeLink = meal?.strYoutube;
+
   return (
     <Grid.Container gap={2} justify="center">
       <Grid xs={12}>
@@ -134,19 +138,30 @@ export function Meal() {
                 </Text>
                 {renderTags}
               </Col>
-              <Col css={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Button
-                  auto
-                  color="error"
-                  icon={
-                    isFavorite ? (
-                      <BsHeartFill fill="currentColor" />
-                    ) : (
-                      <BsHeart fill="currentColor" />
-                    )
-                  }
-                  onPress={handleFavorite}
-                />
+              <Col
+                css={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  flexBasis: '15%'
+                }}
+              >
+                {!isLoadingFavorite && (
+                  <Button
+                    auto
+                    shadow
+                    color="error"
+                    icon={
+                      isFavorite ? (
+                        <BsHeartFill fill="currentColor" />
+                      ) : (
+                        <BsHeart fill="currentColor" />
+                      )
+                    }
+                    onPress={handleFavorite}
+                  >
+                    {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                  </Button>
+                )}
               </Col>
             </Row>
           </Card.Header>
@@ -163,22 +178,24 @@ export function Meal() {
                 <h5>Ingredients:</h5>
                 {renderIngredients}
               </Grid>
-              <Grid xs={9} direction="column">
+              <Grid xs={hasYoutubeLink ? 9 : 10} direction="column">
                 <h5>Instructions:</h5>
                 <Text>{meal?.strInstructions}</Text>
               </Grid>
-              <Grid xs={1}>
-                <Text css={{ mt: 32 }}>
-                  <Link
-                    color="error"
-                    href={meal?.strYoutube}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <AiFillYoutube size={32} />
-                  </Link>
-                </Text>
-              </Grid>
+              {hasYoutubeLink && (
+                <Grid xs={1}>
+                  <Text css={{ mt: 32 }}>
+                    <Link
+                      color="error"
+                      href={hasYoutubeLink}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <AiFillYoutube size={32} />
+                    </Link>
+                  </Text>
+                </Grid>
+              )}
             </Grid.Container>
           </Card.Body>
         </Card>
