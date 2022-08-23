@@ -14,7 +14,7 @@ const getMeals = async (searchValue: string) => {
   return data?.meals;
 };
 
-export default function useMeals(searchValue: string) {
+export const useMeals = (searchValue: string) => {
   return useQuery<Meal[], boolean>(
     ['meals', searchValue],
     () => getMeals(searchValue),
@@ -23,4 +23,4 @@ export default function useMeals(searchValue: string) {
       refetchOnWindowFocus: false
     }
   );
-}
+};
