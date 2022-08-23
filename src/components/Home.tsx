@@ -36,8 +36,6 @@ export function Home() {
 
   const { zIndices } = theme;
 
-  console.log('zIndices => ', zIndices.max);
-
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
