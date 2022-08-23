@@ -14,9 +14,9 @@ const getMeal = async (mealID: string | undefined) => {
   return data.meals[0] as Meal;
 };
 
-export default function useMeal(mealID: string | undefined) {
+export const useMeal = (mealID: string | undefined) => {
   return useQuery<Meal, boolean>(['meal', mealID], () => getMeal(mealID), {
     enabled: !!mealID,
     refetchOnWindowFocus: false
   });
-}
+};

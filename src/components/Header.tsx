@@ -1,17 +1,25 @@
 /** Component */
 import { Avatar, Container, theme } from '@nextui-org/react';
-import { Link } from 'react-router-dom';
-import { Player } from '@lottiefiles/react-lottie-player';
+import { Link, useNavigate } from 'react-router-dom';
 
 /** Icons */
 import { MealIcon } from './MealIcon';
 
-/** Context */
-import { useAuth } from '../context/AuthContext';
+/** Hooks */
+import { useUserStore } from '../store';
 
 export function Header() {
+  const user = useUserStore(state => state.user);
+  const logout = useUserStore(state => state.logout);
+
+  const navigate = useNavigate();
+
   const { zIndices } = theme;
-  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <Container
@@ -38,9 +46,10 @@ export function Header() {
         </Link>
         {user && (
           <Avatar
+            pointer
             src={user?.photoURL || 'https://via.placeholder.com/120'}
             size="lg"
-            onClick={logout}
+            onClick={handleLogout}
           />
         )}
       </Container>

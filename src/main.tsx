@@ -12,9 +12,6 @@ import { NextUIProvider } from '@nextui-org/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
-/** Context */
-import { AuthProvider } from './context/AuthContext';
-
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -23,9 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         <NextUIProvider>
-          <AuthProvider>
-            <App />
-          </AuthProvider>
+          <App />
         </NextUIProvider>
       </QueryClientProvider>
     </BrowserRouter>
