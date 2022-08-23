@@ -13,11 +13,14 @@ import {
   Loading,
   Row,
   Spacer,
-  Text
+  Text,
+  theme
 } from '@nextui-org/react';
 
 /** Lottie */
 import { Player } from '@lottiefiles/react-lottie-player';
+
+import confetti from 'canvas-confetti';
 
 /** Dynamic */
 const MealCardComponent = lazy(() =>
@@ -31,11 +34,25 @@ export function Home() {
 
   const { data: meals, isFetching } = useMeals(searchValue);
 
+  const { zIndices } = theme;
+
+  console.log('zIndices => ', zIndices.max);
+
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setSearchValue(inputValue);
     setSearchParam(inputValue);
+
+    confetti({
+      particleCount: 150,
+      zIndex: +zIndices.max.value,
+      origin: {
+        x: 0.57,
+        // since they fall down, start a bit higher than random
+        y: 0.3
+      }
+    });
   };
 
   return (
