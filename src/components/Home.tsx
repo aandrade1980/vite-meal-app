@@ -66,7 +66,9 @@ export function Home() {
                     onChange={e => setInputValue(e.target.value)}
                   />
                   <Spacer x={1} />
-                  <Button type="submit">Search</Button>
+                  <Button type="submit" shadow>
+                    Search
+                  </Button>
                 </Container>
               </form>
             </Row>
