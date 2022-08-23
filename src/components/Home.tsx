@@ -47,7 +47,6 @@ export function Home() {
       zIndex: +zIndices.max.value,
       origin: {
         x: 0.57,
-        // since they fall down, start a bit higher than random
         y: 0.3
       }
     });
