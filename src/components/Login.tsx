@@ -1,14 +1,14 @@
+/** Hooks */
+import { useUserStore } from '../store';
+
 /** Components */
 import { Button, Card, Container, Row, Text } from '@nextui-org/react';
 
 /** Icons */
 import { FcGoogle } from 'react-icons/fc';
 
-/** Context */
-import { useAuth } from '../context/AuthContext';
-
 export function Login() {
-  const { login } = useAuth();
+  const login = useUserStore(state => state.login);
 
   return (
     <Container display="flex" css={{ mt: 64, minHeight: 250 }}>

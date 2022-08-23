@@ -1,9 +1,8 @@
 /** Hooks */
-import { useAuth } from '../context/AuthContext';
 import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import useMeal from '../hooks/useMeal';
-import { useIsFavoriteMeal } from '../hooks/useFavoritesMeals';
+import { useIsFavoriteMeal, useMeal } from '../hooks';
+import { useUserStore } from '../store';
 
 /** Components */
 import {
@@ -31,7 +30,7 @@ import { supabaseClient } from '../service/supabase';
 export function Meal() {
   const params = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const user = useUserStore(state => state.user);
 
   const { data: meal, isFetching } = useMeal(params.id);
 

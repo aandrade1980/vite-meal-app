@@ -4,8 +4,6 @@ describe('home page', () => {
   it('should go to the home page', () => {
     cy.visit(baseUrl);
 
-    cy.url().should('include', '/login');
-
     cy.contains('Welcome to Meal App');
   });
 });

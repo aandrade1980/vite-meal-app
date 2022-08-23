@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 /** Components */
-import { Header, Home, Login } from './components';
+import { Auth, Header, Home } from './components';
 import { ToastContainer } from 'react-toastify';
 
 /** Dynamic */
@@ -17,16 +17,12 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={Auth(<Home />)} />
         <Route
           path="/:id"
-          element={
-            <Suspense>
-              <MealComponent />
-            </Suspense>
-          }
+          element={<Suspense>{Auth(<MealComponent />)}</Suspense>}
         />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={Auth(<Home />)} />
       </Routes>
       <Suspense fallback={null}>
         <ToastContainer />
