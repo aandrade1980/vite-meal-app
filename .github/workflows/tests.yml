@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install
-      - run: npm run lint
+      - run: npx turbo lint
   # TODO: Need to set up Jest first...
   # unit-integration-jest:
   #   runs-on: ubuntu-latest
@@ -28,6 +28,6 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         with:
           browser: chrome
-          build: npm run build
-          start: npm run preview
+          build: npx turbo build
+          start: npx turbo preview
           wait-on: 'http://localhost:4173'
