@@ -1,5 +1,5 @@
 /** Hooks */
-import { lazy, useEffect, useState } from 'react';
+import { lazy, useState } from 'react';
 import useLocalStorage from 'use-local-storage';
 import { useMeals } from '../hooks';
 
@@ -29,8 +29,8 @@ const MealCardComponent = lazy(() =>
 
 export function Home() {
   const [searchParam, setSearchParam] = useLocalStorage('searchParam', '');
-  const [inputValue, setInputValue] = useState(searchParam);
   const [searchValue, setSearchValue] = useState(searchParam);
+  const [inputValue, setInputValue] = useState(searchParam);
 
   const { data: meals, isFetching } = useMeals(searchValue);
 
@@ -51,19 +51,6 @@ export function Home() {
       }
     });
   };
-
-  useEffect(() => {
-    if (!isFetching && meals) {
-      confetti({
-        particleCount: 150,
-        zIndex: +zIndices.max.value,
-        origin: {
-          x: 0.57,
-          y: 0.3
-        }
-      });
-    }
-  }, [isFetching, meals]);
 
   // TODO: No results message - screen?
 
