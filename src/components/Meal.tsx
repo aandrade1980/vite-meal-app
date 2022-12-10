@@ -35,7 +35,8 @@ export function Meal() {
   const { data: meal, isFetching } = useMeal(params.id);
 
   const { isFavorite, isLoadingFavorite, refetch } = useIsFavoriteMeal(
-    params.id as string
+    params.id as string,
+    user?.uid ?? ''
   );
 
   const handleOnBack = () => navigate('/');

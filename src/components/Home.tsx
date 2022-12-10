@@ -1,5 +1,5 @@
 /** Hooks */
-import { lazy, useState } from 'react';
+import { lazy, useEffect, useState } from 'react';
 import useLocalStorage from 'use-local-storage';
 import { useMeals } from '../hooks';
 
@@ -51,6 +51,21 @@ export function Home() {
       }
     });
   };
+
+  useEffect(() => {
+    if (!isFetching && meals) {
+      confetti({
+        particleCount: 150,
+        zIndex: +zIndices.max.value,
+        origin: {
+          x: 0.57,
+          y: 0.3
+        }
+      });
+    }
+  }, [isFetching, meals]);
+
+  // TODO: No results message - screen?
 
   return (
     <Container xl as="main" display="flex" justify="center">
