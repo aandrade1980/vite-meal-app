@@ -17,6 +17,7 @@ const getMeal = async (mealID: string | undefined) => {
 export const useMeal = (mealID: string | undefined) => {
   return useQuery<Meal, boolean>(['meal', mealID], () => getMeal(mealID), {
     enabled: !!mealID,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    keepPreviousData: true
   });
 };
