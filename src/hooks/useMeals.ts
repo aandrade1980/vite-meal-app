@@ -20,7 +20,8 @@ export const useMeals = (searchValue: string) => {
     () => getMeals(searchValue),
     {
       enabled: searchValue.length > 2,
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
+      keepPreviousData: true
     }
   );
 };
