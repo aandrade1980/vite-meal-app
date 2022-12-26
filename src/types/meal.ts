@@ -2,6 +2,7 @@ import { z } from "zod";
 
 const mealSchema = z.object({
   idMeal: z.string(),
+  strCategory: z.string().optional(),
   strIngredient1: z.string().optional(),
   strIngredient2: z.string().optional(),
   strIngredient3: z.string().optional(),
