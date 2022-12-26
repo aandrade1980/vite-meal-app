@@ -1,5 +1,5 @@
 /** Hooks */
-import { lazy, useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import useLocalStorage from 'use-local-storage';
 import { useMeals } from '../hooks';
 
@@ -29,17 +29,15 @@ const MealCardComponent = lazy(() =>
 
 export function Home() {
   const [searchParam, setSearchParam] = useLocalStorage('searchParam', '');
-  const [searchValue, setSearchValue] = useState(searchParam);
   const [inputValue, setInputValue] = useState(searchParam);
 
-  const { data: meals, isFetching } = useMeals(searchValue);
+  const { data: meals, isFetching } = useMeals(searchParam);
 
   const { zIndices } = theme;
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setSearchValue(inputValue);
     setSearchParam(inputValue);
 
     confetti({
@@ -82,9 +80,7 @@ export function Home() {
                     onChange={e => setInputValue(e.target.value)}
                   />
                   <Spacer x={1} />
-                  <Button type="submit" shadow>
-                    Search
-                  </Button>
+                  <Button shadow>Search</Button>
                 </Container>
               </form>
             </Row>
@@ -104,14 +100,16 @@ export function Home() {
               overflowX: 'auto'
             }}
           >
-            {meals?.map(meal => (
-              <MealCardComponent
-                key={meal.idMeal}
-                idMeal={meal.idMeal}
-                strMealThumb={meal.strMealThumb}
-                strMeal={meal.strMeal}
-              />
-            ))}
+            <Suspense>
+              {meals?.map(meal => (
+                <MealCardComponent
+                  key={meal.idMeal}
+                  idMeal={meal.idMeal}
+                  strMealThumb={meal.strMealThumb}
+                  strMeal={meal.strMeal}
+                />
+              ))}
+            </Suspense>
           </Grid.Container>
         )}
       </Grid.Container>
