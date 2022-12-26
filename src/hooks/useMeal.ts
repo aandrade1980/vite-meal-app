@@ -18,6 +18,6 @@ export const useMeal = (mealID: string | undefined) => {
   return useQuery<Meal, boolean>(['meal', mealID], () => getMeal(mealID), {
     enabled: !!mealID,
     // stale data 15 mins
-    staleTime: 900000
+    staleTime: 1000 * 60 * 15
   });
 };
