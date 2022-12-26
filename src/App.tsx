@@ -11,9 +11,9 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={Auth(<Home />)} />
-        <Route path="/:id" element={Auth(<Meal />)} />
-        <Route path="/login" element={Auth(<Home />)} />
+        <Route index path="/" element={Auth(<Home />)} />
+        <Route path=":id" element={Auth(<Meal />)} />
+        <Route path="login" element={Auth(<Home />)} />
       </Routes>
       <ToastContainer />
     </div>
