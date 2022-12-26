@@ -69,11 +69,13 @@ export function Meal() {
   );
 
   const handleFavorite = async () => {
+    const mealId = meal?.idMeal;
+
     if (isFavorite) {
       const { error: removeFavoriteError } = await supabaseClient
         .from('favorites_meals')
         .delete()
-        .match({ meal_id: meal?.idMeal });
+        .match({ meal_id: mealId });
 
       if (removeFavoriteError) {
         console.error(removeFavoriteError);
@@ -82,19 +84,26 @@ export function Meal() {
         toast.success('Meal removed from favorites!', { theme: 'colored' });
       }
     } else {
-      const { data, error } = await supabaseClient
-        .from('favorites_meals')
-        .insert({
+      const [insertFavorite] = await Promise.allSettled([
+        supabaseClient.from('favorites_meals').insert({
           user_id: user?.uid,
-          meal_id: meal?.idMeal
-        });
+          meal_id: mealId
+        }),
+        supabaseClient.from('meals').insert({
+          meal_id: mealId,
+          name: meal?.strMeal,
+          category: meal?.strCategory,
+          image: meal?.strMealThumb
+        })
+      ]);
 
-      if (data) {
-        toast.success('Meal marked as favorite!', { theme: 'colored' });
-      }
+      if (insertFavorite.status === 'fulfilled') {
+        if (insertFavorite.value.status === 201) {
+          toast.success('Meal marked as favorite!', { theme: 'colored' });
+        }
 
-      if (error && error.code === '23505') {
-        toast.error('Meal already marked as favorite!', { theme: 'colored' });
+        if (insertFavorite.value.error?.code === '23505')
+          toast.error('Meal already marked as favorite!', { theme: 'colored' });
       }
     }
 
