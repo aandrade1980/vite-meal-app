@@ -22,7 +22,7 @@ export const useMeals = (searchValue: string) => {
       enabled: searchValue.length > 2,
       keepPreviousData: true,
       // stale data 15 mins
-      staleTime: 900000
+      staleTime: 1000 * 60 * 15
     }
   );
 };

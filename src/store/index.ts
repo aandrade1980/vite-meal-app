@@ -17,7 +17,7 @@ export const useUserStore = create<UserState>(set => ({
   login: () => {
     signInWithPopup(auth, provider).then(result =>
       set(() => ({ user: result.user }))
-    );
+    ).then(() => window.location.href = '/');
   },
   logout: async () => {
     await auth.signOut();
