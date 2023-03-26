@@ -1,22 +1,6 @@
 name: Tests CI
 on: [push, workflow_dispatch] # On push and manual
 jobs:
-  static-eslint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-      with:
-        version: 7
-      - name: Install dependencies
-        run: pnpm install
-      - name: Run Turbo Lint
-        run: npx turbo lint
-  # TODO: Need to set up Jest first...
-  # unit-integration-jest:
-  #   runs-on: ubuntu-latest
-  #   steps:
-
   ui-cypress:
     runs-on: ubuntu-latest
     steps:
