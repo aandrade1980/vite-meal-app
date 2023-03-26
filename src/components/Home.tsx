@@ -50,8 +50,6 @@ export function Home() {
     });
   };
 
-  // TODO: No results message - screen?
-
   return (
     <Container xl as="main" display="flex" justify="center">
       <Grid.Container gap={2}>
@@ -80,7 +78,9 @@ export function Home() {
                     onChange={e => setInputValue(e.target.value)}
                   />
                   <Spacer x={1} />
-                  <Button shadow>Search</Button>
+                  <Button shadow type="submit">
+                    Search
+                  </Button>
                 </Container>
               </form>
             </Row>
