@@ -1,22 +1,35 @@
-name: Tests CI
-on: [push, workflow_dispatch] # On push and manual
-jobs:
-  ui-cypress:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
-        env:
-          CYPRESS_host: http://localhost:4173
-          VITE_PROJECT_ID: ${{ secrets.VITE_PROJECT_ID }}
-          VITE_AUTH_DOMAIN: ${{ secrets.VITE_AUTH_DOMAIN }}
-          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-        with:
-          browser: chrome
-          build: npx turbo build
-          start: npx turbo preview
-          wait-on: 'http://localhost:4173'
+# NEED TO UPDATE TO USE PNPM
+
+# name: Tests CI
+# on: [push, workflow_dispatch] # On push and manual
+# jobs:
+#   static-eslint:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - run: npm install
+#       - run: npx turbo lint
+#   # TODO: Need to set up Jest first...
+#   # unit-integration-jest:
+#   #   runs-on: ubuntu-latest
+#   #   steps:
+
+#   ui-cypress:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Cypress run
+#         uses: cypress-io/github-action@v4
+#         env:
+#           CYPRESS_host: http://localhost:4173
+#           VITE_PROJECT_ID: ${{ secrets.VITE_PROJECT_ID }}
+#           VITE_AUTH_DOMAIN: ${{ secrets.VITE_AUTH_DOMAIN }}
+#           VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+#           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+#           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+#         with:
+#           browser: chrome
+#           build: npx turbo build
+#           start: npx turbo preview
+#           wait-on: 'http://localhost:4173'
